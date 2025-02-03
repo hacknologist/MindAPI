@@ -27,6 +27,13 @@ Here you can find a variaty of resources to help you out on the API security pat
 - [API Recon with Kiterunner](https://www.youtube.com/watch?v=hNs8fpWfcyU)
 - [Offensive GraphQL API Exploitation](https://www.youtube.com/watch?v=eKj8F9bOOvk)
 - [Traversing My Way in the Internal Network](https://www.youtube.com/watch?v=f5IEe5r9to8)
+- [API Hacking With ChatGPT!](https://www.youtube.com/watch?v=BTlUEWHRldk)
+- [Web Apps: APIs’ Nightmare](https://www.youtube.com/watch?v=1PjKr4ZZ6Ww)
+- [The Secret Life of APIs: Latest Attack Data Shows What Your APIs Are Doing](https://www.youtube.com/watch?v=ccmQXJcc1co)
+- [I’m an API Hacker and Here’s How I Hack Everything from the Military to AI](https://www.youtube.com/watch?v=9kSBsyLqFgY)
+- [The Arazzo Specification: A Tapestry for API Workflows.](https://www.youtube.com/watch?v=EQaGHjMIcD8)
+- [OWASP API Security Project - Paulo Silva & Erez Yalon](https://www.youtube.com/watch?v=hn4mgTu5izg)
+- [2024 Guide: Hacking APIs](https://www.youtube.com/watch?v=k5HZI6CfHw4)
 
 ## Must read
 - [OWASP API Security Project](https://owasp.org/www-project-api-security/)
@@ -61,6 +68,8 @@ Here you can find a variaty of resources to help you out on the API security pat
 - [Exploiting GraphQL Query Depth](https://checkmarx.com/blog/exploiting-graphql-query-depth/)
 - [Alias and Directive Overloading in GraphQL](https://checkmarx.com/blog/alias-and-directive-overloading-in-graphql/)
 - [Didn’t Notice Your Rate Limiting: GraphQL Batching Attack](https://checkmarx.com/blog/didnt-notice-your-rate-limiting-graphql-batching-attack/)
+- [Best Practices When Deploying Webhooks in Production](https://hookdeck.com/webhooks/guides/best-practices-deploy-webhooks-production)
+- [The Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
 
 ## Practice
 - [Damn Vulnerable GraphQL Application](https://github.com/dolevf/Damn-Vulnerable-GraphQL-Application)
@@ -73,7 +82,11 @@ Here you can find a variaty of resources to help you out on the API security pat
 - [Vulnerable GraphQL API](https://github.com/CarveSystems/vulnerable-graphql-api)
 - [KONTRAs OWASP Top 10 for API](https://application.security/free/owasp-top-10-API)
 - [Vulnerable API with Laravel App](https://github.com/InsiderPhD/Generic-University)
-- [c{api}tal CTF](https://www.capital-ctf.com/)
+- [c{api}tal](https://github.com/Checkmarx/capital)
+- [ParaBank](https://github.com/parasoft/parabank)
+- [VAmPI](https://github.com/erev0s/VAmPI/)
+- [Damn Vulnerable Restaurant](https://github.com/theowni/Damn-Vulnerable-Restaurant-API-Game)
+- [Vulnerable REST API - OWASP 2023](https://github.com/bnematzadeh/vulnerable-rest-api)
 
 ## Writeups
 - [Facebook Group Members Disclosure](https://spongebhav.medium.com/facebook-group-members-disclosure-e53eb83df39e)
@@ -93,6 +106,15 @@ Here you can find a variaty of resources to help you out on the API security pat
 - [DPD package sniffing](https://www.pentestpartners.com/security-blog/dpd-package-sniffing/)
 - [IDOR vulnerability on invoice and weak password reset leads to account take over](https://medium.com/@damaidec/idor-vulnerability-on-invoice-and-weak-password-reset-leads-to-account-take-over-603b42143a8c)
 - [F5 BIG-IP and iControl REST Vulnerabilities and Exposures](https://www.rapid7.com/blog/post/2022/11/16/cve-2022-41622-and-cve-2022-41800-fixed-f5-big-ip-and-icontrol-rest-vulnerabilities-and-exposures/)
+- [How Spoutible’s Leaky API Spurted out a Deluge of Personal Data](https://www.troyhunt.com/how-spoutibles-leaky-api-spurted-out-a-deluge-of-personal-data/)
+- [Forging signed commits on GitHub](https://iter.ca/post/gh-sig-pwn/)
+- [crAPI walkthrough using AI](https://zerodayhacker.com/crapi-walkthrough-using-ai/)
+- [ParaBank walkthrough](https://zerodayhacker.com/parabank-walkthrough/)
+- [c{api}tal walkthrough](https://zerodayhacker.com/capital-walkthrough/)
+- [vAPI walkthrough](https://zerodayhacker.com/vapi-walkthrough/)
+- [DVGA walkthrough](https://zerodayhacker.com/dvga-walkthrough/)
+- [VAmPI walkthrough](https://zerodayhacker.com/vampi-walkthrough/)
+- [Zenly Fixes User Data Exposure and Account Takeover Risks](https://checkmarx.com/blog/zenly-fixes-user-data-exposure-and-account-takeover-risks/)
 ### BOLA / IDOR
 - [Cracking Encrypted Credit Card Numbers Exposed By API](https://infosecwriteups.com/cracking-encrypted-credit-card-numbers-exposed-by-api-977c6f7b996f)
 - [What is BOLA? 3-digit bounty from Topcoder](https://infosecwriteups.com/what-is-bola-3-digit-bounty-from-topcoder-a25e7fae0d64)

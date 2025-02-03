@@ -7,10 +7,25 @@
 #### Architecture
 - REST APIs
   - RESTful
-  - OData 
+    - URL structure
+      - Often use resource-oriented URLs such as: `/api/v1/product/1234` 
+    - Response structure 
+      - Often in JSON or XML format
+      - Consistent and hierarchical structure
+  - OData
+    - A metadata document is usually provided at `/odata/$metadata`
+    - Specific query options present on the URL: `/odata/Products?$filter=Price&$orderby=desc`
+    - Response often includes annotations `@odata.context` or `@odata.metadata`
+    - Typically format is JSON
+    - Usually the response `Content-Type` includes the string `odata`: `application/json;odata.metadata=full`
+    - 
 - GraphQL
-  - Known vulnerabilities
-    - [GraphQL Threat Matrix](https://github.com/nicholasaleks/graphql-threat-matrix)
+  - Response structure
+    - If there an issue with the query, an `errors` object is included in the response
+    - Errors like `Cannot query field` or `Field <field_name> not found` is usually indicative of a GraphQL API 
+    - If the response is successful the response will often contain a `data` field which includes the actual query results
+  - Specific fields
+    -  Response may include `__typename` which is used to identify the type of an object
 - SOAP
   - Transfered data in XML format  
 - XML-RPC
@@ -20,9 +35,16 @@
 - gRPC-Protobuf
   - Identify `grpc`
     - Accept request header
-    - Content-Type request header
+    -  request header
     - Access-control-expose-headers in the response header
-
+  - gRPC messages are encoded using Protobuf, which is binary 
+- Webhooks
+  - Event-driven APIs that send information or perform a specific function in response to a trigger (e.g. time of the day, clicking a button, receiving a form submission)
+    - Identify 
+      - Search for `webhooks` or `event subscriptions` on the documentation 
+      - Find a reference on how to register a callback URL
+      - Is there a list of events types that can trigger a webhook?
+    
 #### Documentation
 - <https://smartbear.com/blog/soap-vs-rest-whats-the-difference/>
 - <https://www.odata.org/documentation/>
@@ -31,6 +53,7 @@
 - <https://www.soapui.org/docs/rest-testing/working-with-rest-services/>
 - <https://cloud.google.com/blog/products/api-management/understanding-grpc-openapi-and-rest-and-when-to-use-them>
 - <https://openapi.tools/>
+- <https://developers.hubspot.com/docs/api/webhooks>
 
 ### Check for documentation
 
@@ -64,8 +87,6 @@
 
 ### Search for APIs
 
-
-
 #### Traffic Analysis
 - REST
   - [Burp CE](https://portswigger.net/burp/communitydownload)
@@ -92,31 +113,47 @@
     - `echo HEX_STREAM | xxd -r -p | protoc --decode_raw`
     - [protoc](https://google.github.io/proto-lens/installing-protoc.html)
     - [Wireshark Protobuf Dissector](https://github.com/128technology/protobuf_dissector)
+  - [gRPC UI](https://github.com/fullstorydev/grpcui)
+  - [ZAP - gRPC Support](https://www.zaproxy.org/docs/desktop/addons/grpc-support/)
 
 #### Android apps
 - [apkleaks](https://github.com/dwisiswant0/apkleaks)
 - [APKEnum](https://github.com/shivsahni/APKEnum)
+- [MobSF](https://github.com/MobSF/Mobile-Security-Framework-MobSF)
 
 #### Wayback Machine
 - <https://archive.org/web/>
 - [waybackurls](https://github.com/tomnomnom/waybackurls)
 - [gau](https://github.com/lc/gau)
+- [waymore](https://github.com/xnl-h4ck3r/waymore)
 
 #### Path Manipulation
-- /api/v1
-- /api/v2
-- /api/v3
+- /api/v1/
+- /api/v2/
+- /api/v3/
+- /api/
+- /api/private
+- /api/partner
+- /api/test
+- api.target.com/v1
+- api.target.com/v2
+- api.target.com/v3
 
-#### Key/Token identification
+#### Key/Token identification/Testing
 
 - [Api-Guesser](https://api-guesser.netlify.app/)
 - [Keyhacks](https://github.com/streaak/keyhacks)
+- [all-about-apikey](https://github.com/daffainfo/all-about-apikey)
 
 #### Dorks
 
 ##### Google
 - `site:target.tld inurl:api`
 - `intitle:"index of" "api.yaml" site:target.tld`
+- REST
+  - `site:target.tld inurl:api | site:*/rest | site:*/v1 | site:*/v2 | site:*/v3`
+- GraphQL
+  - `site:target.tld inurl:graphql`
 - WADL
   - `inurl:/application.wadl`
   - `user filetype:wadl`
@@ -125,7 +162,9 @@
   - `user filetype:wsdl`
   - `ext:wsdl`
 - Odata
-  - inurl:/%24metadata
+  - `inurl:/%24metadata`
+- Webhooks
+  - `inurl:docs webhook`
 
 ##### Github
 - <https://github.com/search?q=target.tld+%2Bapi>
@@ -139,6 +178,9 @@
 - `allintext:"API_SECRET*" ext:env | ext:yml site:target.tld`
 - [truffleHog](https://github.com/dxa4481/truffleHog)
 - [shhgit](https://github.com/eth0izzle/shhgit)
+- [PostLeaks](https://github.com/cosad3s/postleaks?tab=readme-ov-file)
+- [Porch Pirate](https://github.com/MandConsultingGroup/porch-pirate)
+- [js-snitch](https://github.com/vavkamil/js-snitch)
 
 #### API Directories
 
@@ -225,17 +267,40 @@
 ##### feroxbuster
 - <https://github.com/epi052/feroxbuster>
 
+##### wfuzz
+- `wfuzz -z file,/usr/share/wordlists/api_list.txt https://targetname.com/FUZZ`
+- <https://github.com/xmendez/wfuzz>
+
 ##### ReconAIzer
 - <https://github.com/hisxo/ReconAIzer>
+
+##### JS Miner
+- [Detecting API endpoints and source code with JS Miner](https://danaepp.com/detecting-api-endpoints-and-source-code-with-js-miner)
+- <https://github.com/minamo7sen/burp-JS-Miner>
+
+##### GoBuster
+- `gobuster vhost -k --append-domain -u TARGET.TLD -w wordlist.txt`
+- <https://github.com/OJ/gobuster>
+
+##### katana
+- `cat subdomains_list.httpx | katana -mdc 'contains(endpoint, "api")' -o katana_api_output`
+- <https://github.com/projectdiscovery/katana>
+
+##### Sasori
+- `sasori start -c config.json -o sasori_output.txt`
+- <https://github.com/karthikuj/sasori>
 
 ### Supported Content Types
 
 - Play with request URL
   - Requested resource extension e.g. replacing `.json` by `.xml`
   - Query string e.g. replacing `?json` by `?xml` or `?format=json` by `?format=xml`
-- Play with `Content-Type` request header and payload
-  - Without `Content-Type`, submit either `json`, `xml`, ...
+- Play with `` request header and payload
+  - Without ``, submit either `json`, `xml`, ...
   - Changing `Content-Type` and payload accordingly
+
+### Data visualization
+- [JSON Crack](https://jsoncrack.com/editor)
 
 ## Testing
 
@@ -247,7 +312,10 @@
 - Sequential
 - Encoded
 - UUID (aka GUID)
-- Other
+- Composite IDs
+- Hashed
+- Randomly Generated Strings
+- Temporal
 
 ##### Tamper
 
@@ -257,7 +325,12 @@
 - Data Type
   - Is it a number? Change it to a string
   - Is it a string? Change it to a number
-- Method -> GET to POST
+- Method
+  - GET to POST
+  - GET to PUT
+  - GET to PATCH 
+- Base64 encoded?
+  - Decoded it, modify it, encode it again
 
 ###### Duplicate
 - ?id=1&id=2
@@ -268,7 +341,7 @@
 ###### Wildcard
 - GET /users/id -> GET /users/*
 
-###### cross-deployments IDs
+###### Cross-deployments IDs
 - Identify other deployments (hosts) of your target API
 - Enumerate resources IDs (often non- numerical/sequential ones)
 - Test those IDs on your target API host
@@ -283,6 +356,8 @@
   - [Autorize](https://github.com/PortSwigger/autorize)
   - [Auth Analyzer](https://github.com/portswigger/auth-analyzer)
   - [Susanoo](https://github.com/ant4g0nist/Susanoo)
+  - [OFFAT](https://github.com/OWASP/OFFAT/)
+  - [sj](https://github.com/BishopFox/sj)
 - GraphQL
   - [InQL](https://github.com/doyensec/inql)
   - [graphql-path-enum](https://gitlab.com/dee-see/graphql-path-enum)
@@ -339,12 +414,10 @@
 - jwt_cracker
   - `jwt-cracker <JWT> <Alphabet> <Max length>` 
   - <https://github.com/lmammino/jwt-cracker>
-  - jwtcat
-    - `python jwcat.py brute-force <JWT>`
-    - <https://github.com/aress31/jwtcat>
-  - jwtcat
-    - `python jwcat.py wordlist -w <Wordlist> <JWT>`
-    - <https://github.com/aress31/jwtcat>
+- jwtcat
+  - `python jwcat.py brute-force <JWT>`
+  - `python jwcat.py wordlist -w <Wordlist> <JWT>`
+  - <https://github.com/aress31/jwtcat>
 - [JWT Heartbreaker](https://github.com/wallarm/jwt-heartbreaker)
 - gojwtcrack
   - `cat rockyou.txt | ./gojwtcrack -t mytoken.txt`
@@ -409,6 +482,7 @@
     - Fuzz
       - `?redirect_uri=https://TARGET.TLD§FUZZ§`
       - `?redirect_uri=https://§FUZZ§TARGET.TLD`
+      - [URL validation bypass cheat sheet](https://portswigger.net/web-security/ssrf/url-validation-bypass-cheat-sheet)
   - XSS
 - Test the existence of response_type=token
 - Testing state
@@ -429,6 +503,7 @@
 
 #### Check if the API returns full data objects from database with sensitive data
 - [apicheck](https://github.com/BBVA/apicheck)
+- [OFFAT](https://github.com/OWASP/OFFAT/)
 
 #### Compare client data with the API response to check if the filtering is done by client side
 
@@ -436,6 +511,7 @@
 - [Burp CE](https://portswigger.net/burp/communitydownload)
 - [ZAP](https://www.zaproxy.org/)
 - [mitmproxy](https://mitmproxy.org/)
+- [Wireshark](https://www.wireshark.org/)
 
 ### Lack of Resources & Rate Limiting
 
@@ -464,6 +540,7 @@
 ### Broken Function Level Authorization
 - Can a regular user access administrative endpoints? (MindAPI recon can help you here)
 - Testing different HTTP methods (GET, POST, PUT, DELETE, PATCH) will allow level escalation?
+  - [OFFAT](https://github.com/OWASP/OFFAT/) 
 - Enumerate/Bruteforce endpoints for getting unauthorized requests (MindAPI recon can help you here)
 
 ### Mass Assignment
@@ -508,10 +585,12 @@
 
 #### Test for security headers
 - [API Fuzzer](https://github.com/Fuzzapi/API-fuzzer)
+- [OWASP ZAP](https://www.zaproxy.org/)
 
 #### CORS is well configured?
 - [Astra](https://github.com/flipkart-incubator/Astra)
 - [API Fuzzer](https://github.com/Fuzzapi/API-fuzzer)
+- Test Same Origin Policy (SOP): Modify the value of the Origin request header to reflect a different or seemingly untrusted website, and verify if the request is successfully processed
 
 #### Force an error to see if any sensitive information is exposed
 
@@ -537,6 +616,7 @@
   - [APIFuzzer](https://github.com/KissPeter/APIFuzzer)
   - [Susanoo](https://github.com/ant4g0nist/Susanoo)
   - [REcollapse](https://github.com/0xacb/recollapse)
+  - [OFFAT](https://github.com/OWASP/OFFAT/)
 - GraphQL
   - [GraphQLmap](https://github.com/swisskyrepo/GraphQLmap)
   - [graphql-cop](https://github.com/dolevf/graphql-cop)
@@ -552,6 +632,7 @@
   - [TnT-Fuzzer](https://github.com/Teebytes/TnT-Fuzzer)
   - [APIFuzzer](https://github.com/KissPeter/APIFuzzer)
   - [Susanoo](https://github.com/ant4g0nist/Susanoo)
+  - [OFFAT](https://github.com/OWASP/OFFAT/)
 - GraphQL
   - [GraphQLmap](https://github.com/swisskyrepo/GraphQLmap)
 - gRPC-protobuf
@@ -561,6 +642,24 @@
 
 ### Improper Assets Management
 - Check for the API documentation (MindAPI recon can help you here)
+  - REST APIs
+    - `oasdiff diff openapi-test1.yaml openapi-test5.yaml -f text`
+    - <https://www.oasdiff.com/diff-calculator>
+    - <https://github.com/Tufin/oasdiff>
+    - [Detecting new API endpoints with oasdiff](https://danaepp.com/detecting-new-api-endpoints-with-oasdiff)
 - Hosts inventory is missing or outdated.
 - Integrated services inventory, either first- or third-party, is missing or outdated.
 - Old or previous API versions are running unpatched.
+- The aspects of the API (e.g. name, purpose, owner, description, authentication, endpoints, versioning, redirects, errors, parameters, rate-limiting, request and response formats, etc) are missing or outdated.
+- If the API documentation is exposed to the internet, implement an access control mechanism (e.g. login portal) to ensure that only authorized users access the OpenAPI specification or even to the documentation as a whole.
+- If your API shares data with a third-party or you are consuming a third-party API, make sure to include it in the inventory.
+
+### API Testing tools
+- [Postman](https://www.postman.com/downloads/)
+- [Bruno](https://www.usebruno.com/downloads)
+- [Insomnia](https://insomnia.rest/products/insomnia)
+- [HTTPie](https://httpie.io)
+- [Hoppscotch](https://hoppscotch.io/)
+- [BurpSuite](https://portswigger.net/burp/communitydownload)
+- [API Tester](https://apitester.org/)
+- [Scalar](https://scalar.com/)
